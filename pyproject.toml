@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "suap-mcp"
+version = "0.1.0"
+description = "Servidor MCP que expõe a API do SUAP como ferramentas para agentes de IA"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0",           # SDK oficial do Model Context Protocol
+    "suap-api-wrapper>=0.1.0", # Wrapper da API SUAP — PyPI
+    "python-dotenv>=1.0",      # Leitura do arquivo .env
+]
+
+[project.scripts]
+suap-mcp = "suap_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/suap_mcp"]
