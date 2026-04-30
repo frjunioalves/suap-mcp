@@ -5,6 +5,7 @@ from suap_api import SuapClient
 from suap_api.exceptions import SuapError
 
 from suap_mcp.errors import handle_suap_error
+from suap_mcp.log import log_tool
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +20,11 @@ def register(mcp: FastMCP, client: SuapClient, access_token: str) -> None:
         Use esta ferramenta antes de chamar outras para confirmar
         que a autenticação está ativa.
         """
-        try:
-            valid = client.token.verify(access_token)
-            return {"valid": valid}
-        except SuapError as exc:
-            handle_suap_error(exc)
+        with log_tool(logger, "verify_token"):
+            try:
+                valid = client.token.verify(access_token)
+                result = {"valid": valid}
+                logger.debug("  → valid=%s", valid)
+                return result
+            except SuapError as exc:
+                handle_suap_error(exc)

@@ -1,14 +1,13 @@
 import logging
-import sys
 
 from mcp.server.fastmcp import FastMCP
 from suap_api import SuapClient
 
 from suap_mcp.config import load_config
+from suap_mcp.log import setup_logging
 from suap_mcp.tools import comum, edu, token
 
-# Logs vão para stderr — stdout é reservado exclusivamente para o protocolo MCP (stdio transport)
-logging.basicConfig(stream=sys.stderr, level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+setup_logging()
 logger = logging.getLogger(__name__)
 
 
